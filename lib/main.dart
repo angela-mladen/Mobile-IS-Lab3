@@ -4,6 +4,11 @@ import 'package:lab3/firebase_options.dart';
 import 'models/exam.dart';
 import 'widgets/exam_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'widgets/calendar_widget.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +57,10 @@ class MainListScreenState extends State<MainListScreen> {
     return Scaffold(
  appBar: AppBar(
     title: const Text('Exams for this semester'),
+    //  IconButton(
+    //         icon: const Icon(Icons.calendar_today),
+    //         onPressed: () => _showCalendar(context),
+    //           ),
     actions: [
       Row(
         children: [
@@ -72,7 +81,13 @@ class MainListScreenState extends State<MainListScreen> {
         icon: const Icon(Icons.login),
         onPressed: _signOut,
       ),
-      
+      Row(
+        children: [
+          IconButton( 
+          icon: const Icon(Icons.calendar_month),
+          onPressed: _showCalendar,),
+        ],
+      ),
     ],
       )
     ]
@@ -119,6 +134,15 @@ class MainListScreenState extends State<MainListScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  void _showCalendar(){
+     Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CalendarView(exams: exams),
       ),
     );
   }

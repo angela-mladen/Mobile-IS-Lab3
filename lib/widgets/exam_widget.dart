@@ -46,7 +46,7 @@ class ExamWidgetState extends State<ExamWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blueGrey[100], // Change background color
+      color: Colors.blueGrey[100], 
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -101,7 +101,7 @@ class ExamWidgetState extends State<ExamWidget> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue, // Change button color
+                    primary: Colors.blue, 
                   ),
                   onPressed: () => _selectTime(context),
                   child: const Text('Select Time'),
@@ -111,7 +111,7 @@ class ExamWidgetState extends State<ExamWidget> {
             const SizedBox(height: 32),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.green, // Change button color
+                primary: Colors.green,
               ),
               onPressed: () {
                 DateTime selectedDateTime = DateTime(
@@ -123,7 +123,7 @@ class ExamWidgetState extends State<ExamWidget> {
                 );
                 Exam exam = Exam(
                   course: subjectController.text,
-                  timestamp: selectedDateTime,
+                  dateTime: selectedDateTime,
                 );
                 widget.addExam(exam);
                 Navigator.pop(context);
