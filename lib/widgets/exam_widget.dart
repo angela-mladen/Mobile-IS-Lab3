@@ -124,6 +124,8 @@ class ExamWidgetState extends State<ExamWidget> {
                 Exam exam = Exam(
                   course: subjectController.text,
                   dateTime: selectedDateTime,
+                  latitude: 42.004186212873655,
+                  longitude: 21.409531941596985,
                 );
                 widget.addExam(exam);
                 Navigator.pop(context);

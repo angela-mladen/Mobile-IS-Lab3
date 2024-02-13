@@ -6,6 +6,7 @@ import 'widgets/exam_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'widgets/calendar_widget.dart';
+import 'widgets/map_widget.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
@@ -45,11 +46,11 @@ class MainListScreen extends StatefulWidget {
 
 class MainListScreenState extends State<MainListScreen> {
   final List<Exam> exams = [
-    Exam(course: 'Mobile IS', dateTime: DateTime.now()),
-    Exam(course: 'Data science', dateTime: DateTime(2024, 01, 22)),
-    Exam(course: 'Management IS', dateTime: DateTime(2024, 01, 12)),
-    Exam(course: 'Team project', dateTime: DateTime(2024, 02, 12)),
-    Exam(course: 'Video games', dateTime: DateTime.now()),
+    Exam(course: 'Mobile IS', dateTime: DateTime.now(), latitude:42.004186212873655, longitude: 21.409531941596985),
+    Exam(course: 'Data science', dateTime: DateTime(2024, 01, 22),latitude:42.004186212873655, longitude: 21.409531941596985),
+    Exam(course: 'Management IS', dateTime: DateTime(2024, 01, 12),latitude:42.004186212873655, longitude: 21.409531941596985),
+    Exam(course: 'Team project', dateTime: DateTime(2024, 02, 12),latitude:42.004186212873655, longitude: 21.409531941596985),
+    Exam(course: 'Video games', dateTime: DateTime.now(),latitude:42.004186212873655, longitude: 21.409531941596985),
   ];
 
   @override
@@ -88,52 +89,69 @@ class MainListScreenState extends State<MainListScreen> {
           onPressed: _showCalendar,),
         ],
       ),
+      Row(
+        children: [
+           IconButton(onPressed: _openMap, icon: const Icon(Icons.map)),
+        ]
+        
+      ),
     ],
       )
     ]
   ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 5.0,
-          mainAxisSpacing: 5.0,
-        ),
-        itemCount: exams.length,
-        itemBuilder: (context, index) {
-          final course = exams[index].course;
-          final dateTime = exams[index].dateTime;
-
-          return Container(
-            width: 80, // Adjust width
-            height: 80, // Adjust height
-            child: Card(
-              color: Color.fromARGB(255, 173, 216, 230),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      course,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Text(
-                      dateTime.toString(),
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
+        body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 5.0,
+                mainAxisSpacing: 5.0,
               ),
+              itemCount: exams.length,
+              itemBuilder: (context, index) {
+                final course = exams[index].course;
+                final dateTime = exams[index].dateTime;
+
+                return Container(
+                  //width: 80,
+                  //height: 80,
+                  child: Card(
+                    color: Color.fromARGB(255, 173, 216, 230),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            course,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            dateTime.toString(),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => _openMap(),
+                            child: const Text('View Location'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
@@ -145,6 +163,10 @@ class MainListScreenState extends State<MainListScreen> {
         builder: (context) => CalendarView(exams: exams),
       ),
     );
+  }
+ void _openMap() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const MapWidget()));
   }
 
   Future<void> _signOut() async {
